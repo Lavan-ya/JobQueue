@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TODO-App</title>
+        <base href="/">
+        <link href="style.css" type="text/html" rel="stylesheet">
+    </head>
+    <script>
+function data(resp){
+    console.log(resp);
+}
+function callback(res){
+    res.json().then(data);
+}
+function onpress(){
+    fetch("http://localhost:3009/todos",{method:"POST",
+body:JSON.stringify({
+    title:document.getElementById('t').value,
+    completed:document.getElementById('c').value,
+    description:document.getElementById('d').value
+}),
+headers:{
+    "content-Type":"application/json"
+}
+}).then(callback)
+}
+
+function deletedone(){
+console.log("done delete")
+onpressget();
+}
+
+function deleteTODO(id){
+    fetch("http://localhost:3009/todos/"+id,{method:"DELETE",
+headers:{
+    "content-Type":"application/json"
+}
+}).then(deletedone)
+}
+
+function onpressget(){
+fetch("http://localhost:3009/todos",{method:"GET"}).then(responseget)
+}
+
+function responseget(res){
+    res.json().then(displaydata)
+}
+
+function displaydata(data){
+    clearData();
+    var parentElement = document.getElementById("mainarea");
+    //parentElement.innerHTML = JSON.stringify(data);
+    for(var i=0;i<data.length;i++){
+    a = document.createElement('div');
+    
+    b1=document.createElement('span')
+    b1.innerHTML=data[i].title
+
+    b2=document.createElement('span')
+    b2.innerHTML=data[i].completed
+    
+    b3=document.createElement('span')
+    b3.innerHTML=data[i].description
+
+    b6=document.createElement('button')
+    b6.innerHTML="Delete"
+    b6.setAttribute("onclick","deleteTODO("+data[i].id+")")
+    
+    a.appendChild(b1)
+    a.appendChild(b2)
+    a.appendChild(b3)
+    a.appendChild(b6)
+
+    parentElement.appendChild(a);
+    }    
+}
+
+function clearData(){
+    var parentElement = document.getElementById("mainarea")
+    while(parentElement.firstChild){
+        parentElement.removeChild(parentElement.firstChild)
+    }
+}
+    </script>
+    <body class="full">
+        <div class="container">
+            
+            <label id="label1">Title 
+                <input type="text" id="t" autocomplete="off">
+            </label><br></br>
+            <label id="label1">Completed Status 
+                <input type="text" id="c" autocomplete="off">
+            </label><br></br>
+            <label id="label1">Description 
+                <input type="text" id="d" autocomplete="off">
+            </label>
+            <br><br><br>
+            <button onclick="onpress()">Submit</button>
+       <button onclick="onpressget()">Get Details </button>
+        </div>
+        <div id="mainarea">
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+.container{
+   
+    padding-left: 10%;
+    padding-top: 10%;
+    border-style: groove;
+    border-width: 30px 30px;
+    height: 40vh;
+    width: 50vh;
+    border-radius: 10%;
+}
+
+.full{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5%;
+    background-color: aquamarine;
+}
