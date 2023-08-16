@@ -6,7 +6,7 @@ const app = express();
 const path= require('path')
 app.use(bodyParser.json());
 var fs = require('fs')
-app.use(express.static(__dirname + "02-nodejs"))
+app.use(express.static(path.join(__dirname + "JobQueue")))
 app.get('/todos',(req,res)=>{
   
 fs.readFile('a.txt','utf8',(err,data)=>{
